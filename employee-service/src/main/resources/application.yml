@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: employee-service
+  config:
+    import: "optional:configserver:http://localhost:8088"
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shop
+    username: shop
+    password: shop
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: 'create-drop'
+
+    show-sql: true
+    properties:
+      hibernate:
+        format-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
