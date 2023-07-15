@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,4 +38,24 @@ public class EmployeeService {
         responseTemplateVo.setEmployee(employee);
         return List.of(responseTemplateVo);
     }
+
+    public List<ResponseTemplateVo> getEmployeeAndDepart() {
+        List<ResponseTemplateVo> responseList = new ArrayList<>();
+
+        Department[] departments = restTemplate.getForObject("http://localhost:8082/department", Department[].class);
+
+        for (Department department : departments) {
+            ResponseTemplateVo responseTemplateVo = new ResponseTemplateVo();
+
+            List<Employee> employees = employeeRepository.findEmployeeByDepartIdIn(List.of(department.getDepartId()));
+
+            responseTemplateVo.setDepartment(department);
+            responseTemplateVo.setEmployee(employees);
+
+            responseList.add(responseTemplateVo);
+        }
+
+        return responseList;
+    }
+
 }

@@ -28,6 +28,10 @@ public class EmployeeController {
         return employeeService.getEmployeeByDepart(id);
     }
 
+    @GetMapping("/department")
+    public List<ResponseTemplateVo> getEmployeeAndDepart(){
+        return employeeService.getEmployeeAndDepart();
+    }
     @PostMapping
     public void addEmployee(@RequestBody Employee employee){
         employeeService.saveEmployee(employee);
